@@ -1,0 +1,2115 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime 2026 - Jadwal Tayang Real-Time</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --primary-dark: #4f46e5;
+            --accent: #f43f5e;
+            --accent2: #06b6d4;
+            --accent3: #8b5cf6;
+            --bg: #0a0a0f;
+            --bg-card: #12121a;
+            --bg-card-hover: #1a1a25;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border: #1e1e2e;
+            --winter: #38bdf8;
+            --spring: #4ade80;
+            --summer: #fbbf24;
+            --fall: #f97316;
+            --gradient-1: linear-gradient(135deg, #6366f1, #8b5cf6);
+            --gradient-2: linear-gradient(135deg, #f43f5e, #f97316);
+            --gradient-3: linear-gradient(135deg, #06b6d4, #6366f1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* ===== ANIMATED BACKGROUND ===== */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-light);
+        }
+
+        /* ===== LOADING SCREEN ===== */
+        .loading-screen {
+            position: fixed;
+            inset: 0;
+            background: var(--bg);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .loading-logo {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 2rem;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        .loading-bar-container {
+            width: 280px;
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .loading-bar {
+            height: 100%;
+            background: var(--gradient-1);
+            border-radius: 2px;
+            animation: loadingProgress 2s ease-in-out forwards;
+            width: 0%;
+        }
+        .loading-text {
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            font-family: 'Space Grotesk', monospace;
+        }
+        @keyframes loadingProgress {
+            0% { width: 0%; }
+            50% { width: 60%; }
+            100% { width: 100%; }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(0.98); }
+        }
+
+        /* ===== NAVIGATION ===== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+        .nav.scrolled {
+            padding: 0.75rem 2rem;
+            background: rgba(10, 10, 15, 0.95);
+        }
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .nav-logo i {
+            font-size: 1.25rem;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        .nav-links a:hover {
+            color: var(--text);
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-1);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .nav-clock {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.875rem;
+            color: var(--primary-light);
+            background: rgba(99, 102, 241, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 6rem 2rem 4rem;
+            overflow: hidden;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.25rem;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            color: var(--primary-light);
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        .hero-badge .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: blink 1.5s ease-in-out infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease 0.1s both;
+        }
+        .hero h1 .gradient-text {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero p {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.7;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 0.8s ease 0.3s both;
+        }
+        .hero-stat {
+            text-align: center;
+        }
+        .hero-stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+        }
+        .hero-stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 0.25rem;
+        }
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2.5rem;
+            background: var(--gradient-1);
+            color: white;
+            text-decoration: none;
+            border-radius: 1rem;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease 0.4s both;
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.3);
+        }
+        .hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Floating anime covers in hero */
+        .hero-floaters {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .floater {
+            position: absolute;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            animation: float 8s ease-in-out infinite;
+            opacity: 0.6;
+        }
+        .floater img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .floater:nth-child(1) { width: 140px; height: 200px; top: 15%; left: 5%; animation-delay: 0s; }
+        .floater:nth-child(2) { width: 100px; height: 150px; top: 60%; left: 8%; animation-delay: -2s; animation-duration: 10s; }
+        .floater:nth-child(3) { width: 120px; height: 170px; top: 20%; right: 5%; animation-delay: -4s; animation-duration: 9s; }
+        .floater:nth-child(4) { width: 110px; height: 160px; top: 65%; right: 8%; animation-delay: -1s; animation-duration: 11s; }
+        .floater:nth-child(5) { width: 90px; height: 130px; top: 40%; left: 2%; animation-delay: -3s; animation-duration: 12s; }
+        .floater:nth-child(6) { width: 95px; height: 140px; top: 45%; right: 2%; animation-delay: -5s; animation-duration: 10s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(2deg); }
+            66% { transform: translateY(10px) rotate(-1deg); }
+        }
+
+        /* ===== SECTIONS COMMON ===== */
+        .section {
+            position: relative;
+            z-index: 2;
+            padding: 5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .section-tag {
+            display: inline-block;
+            padding: 0.35rem 1rem;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 2rem;
+            font-size: 0.8rem;
+            color: var(--primary-light);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+        .section h2 {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+        }
+        .section p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ===== SEASON TABS ===== */
+        .season-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+        .season-tab {
+            padding: 0.75rem 1.5rem;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text-muted);
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .season-tab:hover {
+            background: var(--bg-card-hover);
+            color: var(--text);
+            transform: translateY(-2px);
+        }
+        .season-tab.active {
+            background: var(--gradient-1);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 8px 30px rgba(99, 102, 241, 0.3);
+        }
+        .season-tab .tab-icon { font-size: 1rem; }
+        .season-tab[data-season="winter"].active { background: linear-gradient(135deg, #38bdf8, #0284c7); box-shadow: 0 8px 30px rgba(56, 189, 248, 0.3); }
+        .season-tab[data-season="spring"].active { background: linear-gradient(135deg, #4ade80, #16a34a); box-shadow: 0 8px 30px rgba(74, 222, 128, 0.3); }
+        .season-tab[data-season="summer"].active { background: linear-gradient(135deg, #fbbf24, #d97706); box-shadow: 0 8px 30px rgba(251, 191, 36, 0.3); }
+        .season-tab[data-season="fall"].active { background: linear-gradient(135deg, #f97316, #ea580c); box-shadow: 0 8px 30px rgba(249, 115, 22, 0.3); }
+
+        /* ===== SEARCH BAR ===== */
+        .search-bar {
+            max-width: 500px;
+            margin: 0 auto 2.5rem;
+            position: relative;
+        }
+        .search-bar input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            color: var(--text);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+        .search-bar input::placeholder {
+            color: var(--text-muted);
+        }
+        .search-bar i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        /* ===== ANIME GRID ===== */
+        .anime-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .anime-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 1.25rem;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        .anime-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .anime-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 0 0 30px rgba(99, 102, 241, 0.1);
+        }
+        .anime-card-image {
+            position: relative;
+            width: 100%;
+            padding-top: 140%;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+        }
+        .anime-card-image img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .anime-card:hover .anime-card-image img {
+            transform: scale(1.1);
+        }
+        .anime-card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(10,10,15,0.95) 0%, rgba(10,10,15,0.3) 50%, transparent 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.25rem;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .anime-card:hover .anime-card-overlay {
+            opacity: 1;
+        }
+        .anime-card-badges {
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
+            right: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            z-index: 3;
+        }
+        .badge {
+            padding: 0.35rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .badge-season {
+            background: rgba(99, 102, 241, 0.9);
+            color: white;
+        }
+        .badge-season.winter { background: rgba(56, 189, 248, 0.9); }
+        .badge-season.spring { background: rgba(74, 222, 128, 0.9); }
+        .badge-season.summer { background: rgba(251, 191, 36, 0.9); color: #1a1a1a; }
+        .badge-season.fall { background: rgba(249, 115, 22, 0.9); }
+        .badge-status {
+            background: rgba(34, 197, 94, 0.9);
+            color: white;
+        }
+        .badge-status.upcoming {
+            background: rgba(251, 191, 36, 0.9);
+            color: #1a1a1a;
+        }
+
+        .anime-card-content {
+            padding: 1.25rem;
+        }
+        .anime-card-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            min-height: 2.8em;
+        }
+        .anime-card-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            flex-wrap: wrap;
+        }
+        .anime-card-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+        .anime-card-meta i {
+            font-size: 0.75rem;
+        }
+        .anime-card-studio {
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.8rem;
+            color: var(--primary-light);
+            font-weight: 500;
+        }
+
+        /* Rating stars */
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            margin-top: 0.5rem;
+        }
+        .rating i {
+            color: #fbbf24;
+            font-size: 0.75rem;
+        }
+        .rating span {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #fbbf24;
+            margin-left: 0.25rem;
+        }
+
+        /* ===== UPCOMING COUNTDOWN SECTION ===== */
+        .countdown-section {
+            background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(139,92,246,0.08));
+            border: 1px solid rgba(99, 102, 241, 0.15);
+            border-radius: 1.5rem;
+            padding: 3rem 2rem;
+            margin: 3rem auto;
+            max-width: 1200px;
+            text-align: center;
+        }
+        .countdown-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .countdown-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .countdown-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+        .countdown-item-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text);
+        }
+        .countdown-timer {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .countdown-item-date {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        /* ===== FEATURED SECTION ===== */
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+        .featured-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 1.25rem;
+            overflow: hidden;
+            display: flex;
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        .featured-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .featured-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(244, 63, 94, 0.1);
+        }
+        .featured-image {
+            width: 140px;
+            min-height: 200px;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .featured-card:hover .featured-image img {
+            transform: scale(1.1);
+        }
+        .featured-content {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .featured-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--gradient-2);
+            color: white;
+            border-radius: 0.5rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            width: fit-content;
+            margin-bottom: 0.75rem;
+        }
+        .featured-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+        .featured-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            flex: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .featured-meta {
+            margin-top: 1rem;
+            display: flex;
+            gap: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* ===== NEWS TICKER ===== */
+        .ticker-wrap {
+            background: var(--bg-card);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            overflow: hidden;
+            padding: 0.75rem 0;
+            position: relative;
+            z-index: 2;
+        }
+        .ticker {
+            display: flex;
+            animation: ticker 40s linear infinite;
+            white-space: nowrap;
+        }
+        .ticker-item {
+            padding: 0 2rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .ticker-item i {
+            color: var(--accent);
+        }
+        .ticker-item strong {
+            color: var(--text);
+        }
+        @keyframes ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 4rem 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 900;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+        .footer p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s ease;
+        }
+        .footer-links a:hover {
+            color: var(--primary-light);
+        }
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .footer-social a:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        /* ===== MOBILE MENU ===== */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+            .nav-clock { display: none; }
+            .hero-stats { gap: 1.5rem; }
+            .hero-stat-number { font-size: 1.8rem; }
+            .floater { display: none; }
+            .featured-card { flex-direction: column; }
+            .featured-image { width: 100%; height: 200px; }
+            .anime-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+        }
+
+        /* ===== NO RESULTS ===== */
+        .no-results {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-muted);
+        }
+        .no-results i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        .no-results h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        /* ===== BACK TO TOP ===== */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 48px;
+            height: 48px;
+            background: var(--gradient-1);
+            border: none;
+            border-radius: 1rem;
+            color: white;
+            font-size: 1.25rem;
+            cursor: pointer;
+            z-index: 99;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 30px rgba(99, 102, 241, 0.3);
+        }
+        .back-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(99, 102, 241, 0.4);
+        }
+
+        /* ===== PROGRESS RING ===== */
+        .progress-ring {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--border);
+            z-index: 1000;
+        }
+        .progress-bar {
+            height: 100%;
+            background: var(--gradient-1);
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+
+        /* Glass morphism effect */
+        .glass {
+            background: rgba(18, 18, 26, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-ring">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-logo">
+            <i class="fas fa-tv"></i> ANIME 2026
+        </div>
+        <div class="loading-bar-container">
+            <div class="loading-bar"></div>
+        </div>
+        <div class="loading-text">Memuat data anime...</div>
+    </div>
+
+    <!-- Particles Canvas -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav class="nav" id="navbar">
+        <div class="nav-logo">
+            <i class="fas fa-tv"></i> ANIME 2026
+        </div>
+        <ul class="nav-links">
+            <li><a href="#hero">Beranda</a></li>
+            <li><a href="#schedule">Jadwal</a></li>
+            <li><a href="#featured">Unggulan</a></li>
+            <li><a href="#countdown">Hitung Mundur</a></li>
+        </ul>
+        <div class="nav-clock" id="navClock">--:--:--</div>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-floaters">
+            <div class="floater">
+                <img src="https://cdn.myanimelist.net/images/anime/1015/148185.jpg" alt="Jujutsu Kaisen" loading="lazy">
+            </div>
+            <div class="floater">
+                <img src="https://cdn.myanimelist.net/images/anime/1135/148549.jpg" alt="Frieren" loading="lazy">
+            </div>
+            <div class="floater">
+                <img src="https://cdn.myanimelist.net/images/anime/1584/143203.jpg" alt="Oshi no Ko" loading="lazy">
+            </div>
+            <div class="floater">
+                <img src="https://cdn.myanimelist.net/images/anime/1886/143309.jpg" alt="Dr Stone" loading="lazy">
+            </div>
+            <div class="floater">
+                <img src="https://cdn.myanimelist.net/images/anime/1506/138982.jpg" alt="Blue Box" loading="lazy">
+            </div>
+            <div class="floater">
+                <img src="https://cdn.myanimelist.net/images/anime/1949/148154.jpg" alt="Fire Force" loading="lazy">
+            </div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="live-dot"></span>
+                Real-Time Update
+            </div>
+            <h1>
+                Anime <span class="gradient-text">2026</span><br>
+                Jadwal Tayang Lengkap
+            </h1>
+            <p>Jelajahi anime-anime terbaru yang tayang tahun 2026. Dari musim dingin hingga musim gugur, temukan judul-judul yang paling dinantikan dengan informasi real-time.</p>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <span class="hero-stat-number" id="totalAnime">120+</span>
+                    <span class="hero-stat-label">Anime</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number">4</span>
+                    <span class="hero-stat-label">Musim</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number" id="studioCount">50+</span>
+                    <span class="hero-stat-label">Studio</span>
+                </div>
+            </div>
+            <a href="#schedule" class="hero-cta">
+                <i class="fas fa-play"></i>
+                Lihat Jadwal
+            </a>
+        </div>
+    </section>
+
+    <!-- News Ticker -->
+    <div class="ticker-wrap">
+        <div class="ticker" id="ticker">
+            <!-- Populated by JS -->
+        </div>
+    </div>
+
+    <!-- Schedule Section -->
+    <section class="section" id="schedule">
+        <div class="section-header">
+            <span class="section-tag">Jadwal Tayang</span>
+            <h2>Anime <span class="gradient-text">2026</span></h2>
+            <p>Pilih musim untuk melihat anime yang tayang. Gunakan pencarian untuk menemukan judul favoritmu.</p>
+        </div>
+
+        <div class="season-tabs">
+            <button class="season-tab active" data-season="all">
+                <span class="tab-icon"><i class="fas fa-border-all"></i></span>
+                Semua
+            </button>
+            <button class="season-tab" data-season="winter">
+                <span class="tab-icon"><i class="fas fa-snowflake"></i></span>
+                Winter
+            </button>
+            <button class="season-tab" data-season="spring">
+                <span class="tab-icon"><i class="fas fa-seedling"></i></span>
+                Spring
+            </button>
+            <button class="season-tab" data-season="summer">
+                <span class="tab-icon"><i class="fas fa-sun"></i></span>
+                Summer
+            </button>
+            <button class="season-tab" data-season="fall">
+                <span class="tab-icon"><i class="fas fa-leaf"></i></span>
+                Fall
+            </button>
+        </div>
+
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Cari anime berdasarkan judul, studio, atau genre...">
+        </div>
+
+        <div class="anime-grid" id="animeGrid">
+            <!-- Populated by JS -->
+        </div>
+    </section>
+
+    <!-- Featured Section -->
+    <section class="section" id="featured">
+        <div class="section-header">
+            <span class="section-tag">Paling Dinantikan</span>
+            <h2>Anime <span style="color: var(--accent);">Unggulan</span></h2>
+            <p>Judul-judul anime paling hype dan dinantikan oleh penggemar di tahun 2026.</p>
+        </div>
+        <div class="featured-grid" id="featuredGrid">
+            <!-- Populated by JS -->
+        </div>
+    </section>
+
+    <!-- Countdown Section -->
+    <section class="section" id="countdown">
+        <div class="countdown-section">
+            <span class="section-tag">Hitung Mundur</span>
+            <h2>Anime Yang Akan Segera Tayang</h2>
+            <p>Hitung mundur waktu menuju premiere anime-anime besar berikutnya</p>
+            <div class="countdown-grid" id="countdownGrid">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">
+            <i class="fas fa-tv"></i> ANIME 2026
+        </div>
+        <p>Informasi jadwal anime real-time. Data diperbarui secara berkala.</p>
+        <ul class="footer-links">
+            <li><a href="#hero">Beranda</a></li>
+            <li><a href="#schedule">Jadwal</a></li>
+            <li><a href="#featured">Unggulan</a></li>
+            <li><a href="#countdown">Hitung Mundur</a></li>
+        </ul>
+        <div class="footer-social">
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-discord"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fas fa-globe"></i></a>
+        </div>
+        <p style="margin-top: 2rem; font-size: 0.8rem; opacity: 0.6;"> Anime 2026 Info. Data dari Wikipedia & MyAnimeList.</p>
+    </footer>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // =====================
+        // ANIME DATA
+        // =====================
+        const animeData = [
+            // WINTER 2026 (January - March)
+            {
+                title: "Fate/strange Fake",
+                originalTitle: "Fate/strange Fake",
+                studio: "A-1 Pictures",
+                episodes: 13,
+                season: "winter",
+                startDate: "2026-01-03",
+                status: "ongoing",
+                image: "https://cdn.myanimelist.net/images/anime/1589/146253.jpg",
+                synopsis: "Cerita palsu dari Holy Grail War yang berlangsung di Snowfield, Amerika Serikat.",
+                featured: true
+            },
+            {
+                title: "Sentenced to Be a Hero",
+                originalTitle: "Yuusha-kei ni Shosu: Choubatsu Yuusha 9004-tai Keimu Kiroku",
+                studio: "Studio Kai",
+                episodes: 12,
+                season: "winter",
+                startDate: "2026-01-03",
+                status: "ongoing",
+                image: "https://cdn.myanimelist.net/images/anime/1329/147371.jpg",
+                synopsis: "Seorang pahlawan yang dijatuhi hukuman dan harus membuktikan kebenarannya."
+            },
+            {
+                title: "Golden Kamuy Season 5",
+                originalTitle: "Golden Kamuy",
+                studio: "Brain's Base",
+                episodes: 13,
+                season: "winter",
+                startDate: "2026-01-05",
+                status: "ongoing",
+                image: "https://cdn.myanimelist.net/images/anime/1903/146787.jpg",
+                synopsis: "Kelanjutan perjalanan Sugimoto dan Asirpe mencari harta karun Ainu."
+            },
+            {
+                title: "My Hero Academia: Vigilantes Season 2",
+                originalTitle: "Vigilante: Boku no Hero Academia Illegals",
+                studio: "Bones Film",
+                episodes: 13,
+                season: "winter",
+                startDate: "2026-01-05",
+                status: "ongoing",
+                image: "https://cdn.myanimelist.net/images/anime/1873/146341.jpg",
+                synopsis: "Spin-off MHA yang mengikuti vigilante Iwao Oguro dan Koichi Haimawari."
+            },
+            {
+                title: "MF Ghost Season 3",
+                originalTitle: "MF Ghost",
+                studio: "Felix Film",
+                episodes: 13,
+                season: "winter",
+                startDate: "2026-01-04",
+                status: "ongoing",
+                image: "https://cdn.myanimelist.net/images/anime/1146/146371.jpg",
+                synopsis: "Balapan mobil yang intens berlanjut di musim ketiga."
+            },
+            {
+                title: "Chained Soldier Season 2",
+                originalTitle: "Mato Seihei no Slave",
+                studio: "Passione / Hayabusa Film",
+                episodes: 12,
+                season: "winter",
+                startDate: "2026-01-08",
+                status: "ongoing",
+                image: "https://cdn.myanimelist.net/images/anime/1160/146910.jpg",
+                synopsis: "Yuuki Wakura melanjutkan pertarungannya sebagai slave dari Anti-Demon Corps."
+            },
+            {
+                title: "Jujutsu Kaisen Season 3",
+                originalTitle: "Jujutsu Kaisen",
+                studio: "MAPPA",
+                episodes: 12,
+                season: "winter",
+                startDate: "2026-01-09",
+                status: "ongoing",
+                image: "https://cdn.myanimelist.net/images/anime/1015/148185.jpg",
+                synopsis: "Musim ketiga dari seri Jujutsu Kaisen. Arc yang sangat dinantikan!",
+                featured: true
+            },
+            {
+                title: "Hell's Paradise Season 2",
+                originalTitle: "Jigokuraku",
+                studio: "MAPPA",
+                episodes: 12,
+                season: "winter",
+                startDate: "2026-01-11",
+                status: "ongoing",
+                image: "https://cdn.myanimelist.net/images/anime/1474/147304.jpg",
+                synopsis: "Gabimaru dan kelompoknya melanjutkan pencarian eliksir kehidupan."
+            },
+            {
+                title: "Fire Force Season 3 (Part 2)",
+                originalTitle: "En'en no Shouboutai",
+                studio: "David Production",
+                episodes: 13,
+                season: "winter",
+                startDate: "2026-01-10",
+                status: "ongoing",
+                image: "https://cdn.myanimelist.net/images/anime/1949/148154.jpg",
+                synopsis: "Bagian kedua dari musim ketiga Fire Force. Pertarungan akhir semakin dekat!",
+                featured: true
+            },
+            {
+                title: "Frieren: Beyond Journey's End Season 2",
+                originalTitle: "Sousou no Frieren",
+                studio: "Madhouse",
+                episodes: 10,
+                season: "winter",
+                startDate: "2026-01-16",
+                status: "ongoing",
+                image: "https://cdn.myanimelist.net/images/anime/1135/148549.jpg",
+                synopsis: "Petualangan Frieren yang abadi melanjutkan perjalanannya memahami manusia.",
+                featured: true
+            },
+            {
+                title: "Oshi no Ko Season 3",
+                originalTitle: "Oshi no Ko",
+                studio: "Doga Kobo",
+                episodes: 11,
+                season: "winter",
+                startDate: "2026-01-14",
+                status: "ongoing",
+                image: "https://cdn.myanimelist.net/images/anime/1584/143203.jpg",
+                synopsis: "Aqua dan Ruby melanjutkan perjalanan mereka di industri hiburan.",
+                featured: true
+            },
+            {
+                title: "Medalist Season 2",
+                originalTitle: "Medalist",
+                studio: "ENGI",
+                episodes: 9,
+                season: "winter",
+                startDate: "2026-01-25",
+                status: "ongoing",
+                image: "https://cdn.myanimelist.net/images/anime/1934/146920.jpg",
+                synopsis: "Inori dan coach Tsukasa berjuang menuju level yang lebih tinggi."
+            },
+            {
+                title: "Tune In to the Midnight Heart",
+                originalTitle: "Mayonaka Heart Tune",
+                studio: "Gekkou",
+                episodes: 12,
+                season: "winter",
+                startDate: "2026-01-06",
+                status: "ongoing",
+                image: "https://cdn.myanimelist.net/images/anime/1903/146915.jpg",
+                synopsis: "Arisu menemukan stasiun radio misterius di tengah malam."
+            },
+            {
+                title: "The Darwin Incident",
+                originalTitle: "Darwin Jihen",
+                studio: "Bellnox Films",
+                episodes: 13,
+                season: "winter",
+                startDate: "2026-01-07",
+                status: "ongoing",
+                image: "https://cdn.myanimelist.net/images/anime/1484/146741.jpg",
+                synopsis: "Kisah anak hibrida manusia-kera yang menjadi pusat perhatian dunia."
+            },
+            {
+                title: "Anyway, I'm Falling in Love with You Season 2",
+                originalTitle: "Douse, Koishite Shimaunda",
+                studio: "Typhoon Graphics",
+                episodes: 12,
+                season: "winter",
+                startDate: "2026-01-09",
+                status: "ongoing",
+                image: "https://cdn.myanimelist.net/images/anime/1184/147343.jpg",
+                synopsis: "Kelanjutan kisah cinta Mizuho dan seragam sekolah bersama."
+            },
+            // SPRING 2026 (April - June)
+            {
+                title: "Classroom of the Elite Season 4",
+                originalTitle: "Youkoso Jitsuryoku Shijou Shugi no Kyoushitsu e",
+                studio: "Lerche",
+                episodes: 16,
+                season: "spring",
+                startDate: "2026-04-01",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1879/146987.jpg",
+                synopsis: "Ayanokouji kembali dengan rencana baru di kelas D. Arc 2nd Year!",
+                featured: true
+            },
+            {
+                title: "Dorohedoro Season 2",
+                originalTitle: "Dorohedoro",
+                studio: "MAPPA",
+                episodes: 11,
+                season: "spring",
+                startDate: "2026-04-01",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1464/146469.jpg",
+                synopsis: "Kaiman dan Nikaido kembali ke dunia dorohedoro yang penuh misteri.",
+                featured: true
+            },
+            {
+                title: "Dr. Stone: Science Future (Part 3)",
+                originalTitle: "Dr. Stone",
+                studio: "TMS Entertainment",
+                episodes: 13,
+                season: "spring",
+                startDate: "2026-04-02",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1886/143309.jpg",
+                synopsis: "Arc final dari Dr. Stone! Senku memulai perjalanan terakhirnya.",
+                featured: true
+            },
+            {
+                title: "Welcome to Demon School! Iruma-kun Season 4",
+                originalTitle: "Mairimashita! Iruma-kun",
+                studio: "Bandai Namco Pictures",
+                episodes: 24,
+                season: "spring",
+                startDate: "2026-04-04",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1454/147208.jpg",
+                synopsis: "Iruma Suzuki kembali menghadapi tantangan baru di Sekolah Iblis."
+            },
+            {
+                title: "One Piece: Elbaph",
+                originalTitle: "One Piece",
+                studio: "Toei Animation",
+                season: "spring",
+                startDate: "2026-04-05",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1322/135816.jpg",
+                synopsis: "Arc baru One Piece! Bajak laut Topi Jerami tiba di negeri raksasa Elbaph!",
+                featured: true
+            },
+            {
+                title: "Witch Hat Atelier",
+                originalTitle: "Tongari Boushi no Atelier",
+                studio: "Bug Films",
+                episodes: 13,
+                season: "spring",
+                startDate: "2026-04-06",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1384/148347.jpg",
+                synopsis: "Coco bermimpi menjadi penyihir dan belajar seni sihir yang sesungguhnya.",
+                featured: true
+            },
+            {
+                title: "Farming Life in Another World Season 2",
+                originalTitle: "Isekai Nonbiri Nouka",
+                studio: "Zero-G",
+                episodes: 12,
+                season: "spring",
+                startDate: "2026-04-06",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1903/146805.jpg",
+                synopsis: "Hiraku kembali menjalani kehidupan pertanian yang damai di dunia lain."
+            },
+            {
+                title: "Marriagetoxin",
+                originalTitle: "Marriagetoxin",
+                studio: "Bones Film",
+                season: "spring",
+                startDate: "2026-04-07",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1366/147306.jpg",
+                synopsis: "Seorang pembunuh harus menikah untuk melindungi keluarganya."
+            },
+            {
+                title: "Liar Game",
+                originalTitle: "Liar Game",
+                studio: "Madhouse",
+                season: "spring",
+                startDate: "2026-04-07",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1890/146986.jpg",
+                synopsis: "Adaptasi anime dari manga thriller psikologis terkenal."
+            },
+            {
+                title: "The Most Heretical Last Boss Queen Season 2",
+                originalTitle: "Higeki no Genkyou to naru Saikyou Gedou Last Boss Joou wa Min no tame ni Tsukushimasu",
+                studio: "OLM Team Yoshioka",
+                episodes: 12,
+                season: "spring",
+                startDate: "2026-04-07",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1203/147306.jpg",
+                synopsis: "Pride Royal Ivy melanjutkan perjuangannya mengubah takdirnya."
+            },
+            {
+                title: "The Classroom of a Black Cat and a Witch",
+                originalTitle: "Kuroneko to Majo no Kyoushitsu",
+                studio: "Liden Films",
+                season: "spring",
+                startDate: "2026-04-12",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1908/147276.jpg",
+                synopsis: "Seorang murid penyihir dan kucing hitamnya di akademi sihir."
+            },
+            {
+                title: "Wistoria: Wand and Sword Season 2",
+                originalTitle: "Tsue to Tsurugi no Wistoria",
+                studio: "Actas / Bandai Namco Pictures",
+                season: "spring",
+                startDate: "2026-04-12",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1339/146768.jpg",
+                synopsis: "Will Serfort kembali membuktikan dirinya di akademi sihir."
+            },
+            {
+                title: "Ace of Diamond Act II Season 2",
+                originalTitle: "Daiya no A Act II",
+                studio: "OLM",
+                season: "spring",
+                startDate: "2026-04-05",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1396/146918.jpg",
+                synopsis: "Sawamura dan Seidou melaju ke turnamen nasional."
+            },
+            {
+                title: "Needy Girl Overdose",
+                originalTitle: "Needy Girl Overdose",
+                studio: "Yostar Pictures",
+                episodes: 13,
+                season: "spring",
+                startDate: "2026-04-05",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1390/146916.jpg",
+                synopsis: "Seorang streamer yang berjuang dengan kesehatan mentalnya."
+            },
+            {
+                title: "I Made Friends with the Second Prettiest Girl in My Class",
+                originalTitle: "Class de 2-ban Me ni Kawaii Onna no Ko to Tomodachi ni Natta",
+                studio: "Connect",
+                episodes: 12,
+                season: "spring",
+                startDate: "2026-04-07",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1340/147373.jpg",
+                synopsis: "Seorang pemuda berteman dengan gadis tercantik kedua di kelasnya."
+            },
+            // SUMMER 2026 (July - September)
+            {
+                title: "Saga of Tanya the Evil Season 2",
+                originalTitle: "Youjo Senki II",
+                studio: "NUT",
+                season: "summer",
+                startDate: "2026-07-01",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1436/146599.jpg",
+                synopsis: "Tanya Degurechaff kembali ke medan perang! Musim kedua yang sangat dinantikan!",
+                featured: true
+            },
+            {
+                title: "The Elusive Samurai Season 2",
+                originalTitle: "Nige Jouzu no Wakagimi",
+                studio: "CloverWorks",
+                season: "summer",
+                startDate: "2026-07-01",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1078/146567.jpg",
+                synopsis: "Tokiyuki dan kelompoknya melanjutkan perebutan kekuasaan."
+            },
+            {
+                title: "Hell Mode Season 2",
+                originalTitle: "Hell Mode: Yarikomizuki no Gamer wa Hai Settei no Isekai de Musou Suru",
+                studio: "Yokohama Animation Laboratory",
+                season: "summer",
+                startDate: "2026-07-04",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1403/146684.jpg",
+                synopsis: "Allen melanjutkan petualangannya dengan difficulty Hell."
+            },
+            {
+                title: "Skeleton Knight in Another World Season 2",
+                originalTitle: "Gaikotsu Kishi-sama, Tadaima Isekai e Odekakechuu II",
+                studio: "Aura Studio",
+                season: "summer",
+                startDate: "2026-07-04",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1363/146687.jpg",
+                synopsis: "Arc kembali ke dunia lain sebagai ksatria tengkorak."
+            },
+            {
+                title: "Magilumiere Magical Girls Inc. Season 2",
+                originalTitle: "Kabushiki Gaisha Magilumiere",
+                studio: "J.C.Staff",
+                season: "summer",
+                startDate: "2026-07-05",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1566/146596.jpg",
+                synopsis: "Kana dan perusahaan Magilumiere menghadapi ancaman baru."
+            },
+            {
+                title: "Sparks of Tomorrow",
+                originalTitle: "20 Seiki Denki Mokuroku: Eureka Evlika",
+                studio: "Kyoto Animation",
+                season: "summer",
+                startDate: "2026-07-05",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1589/146469.jpg",
+                synopsis: "Anime original terbaru dari Kyoto Animation!",
+                featured: true
+            },
+            {
+                title: "The 100 Girlfriends Season 3",
+                originalTitle: "Kimi no Koto ga Dai Dai Dai Dai Daisuki na 100-nin no Kanojo",
+                studio: "Bibury Animation Studios",
+                season: "summer",
+                startDate: "2026-07-05",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1491/146469.jpg",
+                synopsis: "Rentarou dan 100 pacarnya kembali dengan kekacauan baru!"
+            },
+            {
+                title: "Yowamushi Pedal Season 6",
+                originalTitle: "Yowamushi Pedal",
+                studio: "TMS Entertainment",
+                season: "summer",
+                startDate: "2026-07-01",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1711/146598.jpg",
+                synopsis: "Onoda dan tim Sohoku melanjutkan balapan sepeda mereka."
+            },
+            {
+                title: "Heroine? Saint? No, I'm an All-Works Maid!",
+                originalTitle: "Heroine? Seijo? Iie, All Works Maid Desu (Hoko)!",
+                studio: "EMT Squared",
+                season: "summer",
+                startDate: "2026-07-01",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1014/146597.jpg",
+                synopsis: "Seorang maid yang terlibat dalam skenario otome game."
+            },
+            {
+                title: "Iron Wok Jan",
+                originalTitle: "Tetsunabe no Jan!",
+                studio: "Troyca",
+                season: "summer",
+                startDate: "2026-07-05",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1243/146935.jpg",
+                synopsis: "Jan berjuang untuk menjadi koki terbaik dengan wajan besinya."
+            },
+            // FALL 2026 (October - December)
+            {
+                title: "Aoashi Season 2",
+                originalTitle: "Aoashi",
+                studio: "TMS Entertainment",
+                season: "fall",
+                startDate: "2026-10-04",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1691/146469.jpg",
+                synopsis: "Ashito Aoi melanjutkan karir sepak bolanya di musim kedua."
+            },
+            {
+                title: "Blue Box Season 2",
+                originalTitle: "Ao no Hako",
+                studio: "Electric Circus",
+                season: "fall",
+                startDate: "2026-10-04",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1506/138982.jpg",
+                synopsis: "Taiki dan Chinatsu melanjutkan perjalanan mereka di klub olahraga.",
+                featured: true
+            },
+            {
+                title: "Reincarnated as a Sword Season 2",
+                originalTitle: "Tensei Shitara Ken Deshita",
+                studio: "C2C",
+                season: "fall",
+                startDate: "2026-10-01",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1911/146602.jpg",
+                synopsis: "Teacher dan Fran melanjutkan petualangan mereka."
+            },
+            {
+                title: "Tokyo Revengers: War of the Three Titans Arc",
+                originalTitle: "Tokyo Revengers: Santen Sensou-hen",
+                studio: "Liden Films",
+                season: "fall",
+                startDate: "2026-10-01",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1448/146469.jpg",
+                synopsis: "Takemichi kembali melintas waktu untuk menyelamatkan semua orang.",
+                featured: true
+            },
+            {
+                title: "Ranma 1/2 Season 3",
+                originalTitle: "Ranma 1/2",
+                studio: "MAPPA",
+                season: "fall",
+                startDate: "2026-10-01",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1585/146469.jpg",
+                synopsis: "Kelanjutan reboot Ranma 1/2 oleh MAPPA."
+            },
+            {
+                title: "The Apothecary Diaries Season 3 (Part 1)",
+                originalTitle: "Kusuriya no Hitorigoto",
+                studio: "TOHO Animation",
+                season: "fall",
+                startDate: "2026-10-01",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1708/138033.jpg",
+                synopsis: "Maomao kembali memecahkan misteri di istunar kekaisaran.",
+                featured: true
+            },
+            {
+                title: "The Iceblade Sorcerer Shall Rule the World Season 2",
+                originalTitle: "Hyouken no Majutsushi ga Sekai wo Suberu II",
+                studio: "Zero-G",
+                season: "fall",
+                startDate: "2026-10-01",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1194/146600.jpg",
+                synopsis: "Ray White melanjutkan perjalanannya sebagai penyihir pedang es."
+            },
+            {
+                title: "Psyren",
+                originalTitle: "Psyren",
+                studio: "Satelight",
+                season: "fall",
+                startDate: "2026-10-01",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1761/146603.jpg",
+                synopsis: "Ageha Yoshina terjebak dalam game misterius yang membawanya ke masa depan.",
+                featured: true
+            },
+            {
+                title: "Super Psychic Policeman Chojo",
+                originalTitle: "Choujun! Choujou Senpai",
+                studio: "Arvo Animation",
+                season: "fall",
+                startDate: "2026-10-01",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1670/146936.jpg",
+                synopsis: "Seorang polisi dengan kekuatan psikis yang luar biasa."
+            },
+            {
+                title: "Junket Bank",
+                originalTitle: "Junket Bank",
+                studio: "Cue",
+                season: "fall",
+                startDate: "2026-10-01",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1881/146604.jpg",
+                synopsis: "Dunia perjudian yang penuh dengan intrik dan strategi."
+            },
+            {
+                title: "Suikoden: The Anime",
+                originalTitle: "Gensou Suikoden",
+                studio: "Konami Animation",
+                season: "fall",
+                startDate: "2026-10-01",
+                status: "upcoming",
+                image: "https://cdn.myanimelist.net/images/anime/1762/146605.jpg",
+                synopsis: "Adaptasi anime dari game RPG legendaris Suikoden!",
+                featured: true
+            }
+        ];
+
+        // =====================
+        // PARTICLES SYSTEM
+        // =====================
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let animationId;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.opacity = Math.random() * 0.5 + 0.1;
+                this.hue = Math.random() * 60 + 240; // Blue to purple range
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `hsla(${this.hue}, 70%, 60%, ${this.opacity})`;
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            const particleCount = Math.min(80, Math.floor((canvas.width * canvas.height) / 15000));
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function connectParticles() {
+            const maxDistance = 150;
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < maxDistance) {
+                        const opacity = (1 - distance / maxDistance) * 0.15;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(99, 102, 241, ${opacity})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            connectParticles();
+            animationId = requestAnimationFrame(animateParticles);
+        }
+
+        resizeCanvas();
+        initParticles();
+        animateParticles();
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            initParticles();
+        });
+
+        // =====================
+        // LOADING SCREEN
+        // =====================
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('hidden');
+            }, 2200);
+        });
+
+        // =====================
+        // CLOCK
+        // =====================
+        function updateClock() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('id-ID', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            });
+            document.getElementById('navClock').textContent = timeStr;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // =====================
+        // NAVBAR SCROLL
+        // =====================
+        const navbar = document.getElementById('navbar');
+        const progressBar = document.getElementById('progressBar');
+        const backToTop = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            // Navbar
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+
+            // Progress bar
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            progressBar.style.width = scrollPercent + '%';
+
+            // Back to top
+            if (window.scrollY > 500) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // =====================
+        // NEWS TICKER
+        // =====================
+        const tickerItems = [
+            { icon: 'fa-fire', text: '<strong>Jujutsu Kaisen Season 3</strong> sedang tayang!' },
+            { icon: 'fa-star', text: '<strong>Frieren Season 2</strong> tayang perdana Januari 2026' },
+            { icon: 'fa-heart', text: '<strong>Oshi no Ko Season 3</strong> kembali Januari ini' },
+            { icon: 'fa-bolt', text: '<strong>Fire Force Season 3 Part 2</strong> semakin seru!' },
+            { icon: 'fa-crown', text: '<strong>One Piece Elbaph Arc</strong> mulai April 2026' },
+            { icon: 'fa-flask', text: '<strong>Dr. Stone Final Season</strong> April mendatang!' },
+            { icon: 'fa-shield-halved', text: '<strong>Dorohedoro Season 2</strong> oleh MAPPA' },
+            { icon: 'fa-hat-wizard', text: '<strong>Witch Hat Atelier</strong> anime adaptation!' },
+            { icon: 'fa-fist-raised', text: '<strong>Tokyo Revengers</strong> arc baru Oktober 2026' },
+            { icon: 'fa-scroll', text: '<strong>Suikoden Anime</strong> dari Konami Animation' },
+            { icon: 'fa-cat', text: '<strong>Saga of Tanya the Evil S2</strong> Juli 2026' },
+            { icon: 'fa-vial', text: '<strong>The Apothecary Diaries S3</strong> Oktober' },
+        ];
+
+        function initTicker() {
+            const ticker = document.getElementById('ticker');
+            let html = '';
+            // Double the items for seamless loop
+            const allItems = [...tickerItems, ...tickerItems];
+            allItems.forEach(item => {
+                html += `<div class="ticker-item"><i class="fas ${item.icon}"></i> <span>${item.text}</span></div>`;
+            });
+            ticker.innerHTML = html;
+        }
+        initTicker();
+
+        // =====================
+        // RENDER ANIME CARDS
+        // =====================
+        function renderAnimeCards(animeList) {
+            const grid = document.getElementById('animeGrid');
+            
+            if (animeList.length === 0) {
+                grid.innerHTML = `
+                    <div class="no-results" style="grid-column: 1 / -1;">
+                        <i class="fas fa-search"></i>
+                        <h3>Tidak ada hasil</h3>
+                        <p>Coba kata kunci lain atau pilih musim berbeda.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = animeList.map((anime, index) => `
+                <div class="anime-card" data-season="${anime.season}" style="animation-delay: ${index * 0.05}s">
+                    <div class="anime-card-image">
+                        <img src="${anime.image}" alt="${anime.title}" loading="lazy"
+                             onerror="this.src='https://via.placeholder.com/300x420/1a1a2e/6366f1?text=${encodeURIComponent(anime.title.substring(0,15))}'">
+                        <div class="anime-card-badges">
+                            <span class="badge badge-season ${anime.season}">${anime.season}</span>
+                            <span class="badge badge-status ${anime.status}">${anime.status === 'ongoing' ? 'Tayang' : 'Akan Tayang'}</span>
+                        </div>
+                        <div class="anime-card-overlay">
+                            <p style="font-size: 0.85rem; line-height: 1.5;">${anime.synopsis}</p>
+                        </div>
+                    </div>
+                    <div class="anime-card-content">
+                        <div class="anime-card-title">${anime.title}</div>
+                        <div class="anime-card-meta">
+                            <span><i class="fas fa-play-circle"></i> ${anime.episodes || 'TBA'} eps</span>
+                            <span><i class="fas fa-calendar"></i> ${formatDate(anime.startDate)}</span>
+                        </div>
+                        <div class="anime-card-studio">
+                            <i class="fas fa-film" style="margin-right: 0.35rem;"></i>${anime.studio}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Trigger animations
+            requestAnimationFrame(() => {
+                document.querySelectorAll('.anime-card').forEach((card, i) => {
+                    setTimeout(() => card.classList.add('visible'), i * 50);
+                });
+            });
+        }
+
+        function formatDate(dateStr) {
+            if (!dateStr) return 'TBA';
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+        }
+
+        // =====================
+        // RENDER FEATURED
+        // =====================
+        function renderFeatured() {
+            const featured = animeData.filter(a => a.featured);
+            const grid = document.getElementById('featuredGrid');
+
+            grid.innerHTML = featured.map((anime, index) => `
+                <div class="featured-card" style="transition-delay: ${index * 0.1}s">
+                    <div class="featured-image">
+                        <img src="${anime.image}" alt="${anime.title}" loading="lazy"
+                             onerror="this.src='https://via.placeholder.com/300x420/1a1a2e/6366f1?text=${encodeURIComponent(anime.title.substring(0,15))}'">
+                    </div>
+                    <div class="featured-content">
+                        <span class="featured-badge"><i class="fas fa-fire"></i> Hype!</span>
+                        <div class="featured-title">${anime.title}</div>
+                        <div class="featured-desc">${anime.synopsis}</div>
+                        <div class="featured-meta">
+                            <span><i class="fas fa-film"></i> ${anime.studio}</span>
+                            <span><i class="fas fa-calendar"></i> ${formatDate(anime.startDate)}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // =====================
+        // COUNTDOWN
+        // =====================
+        const countdownAnime = [
+            { title: "Classroom of the Elite S4", date: "2026-04-01T00:00:00", image: "https://cdn.myanimelist.net/images/anime/1879/146987.jpg" },
+            { title: "Dorohedoro Season 2", date: "2026-04-01T00:00:00", image: "https://cdn.myanimelist.net/images/anime/1464/146469.jpg" },
+            { title: "Dr. Stone Final Season", date: "2026-04-02T00:00:00", image: "https://cdn.myanimelist.net/images/anime/1886/143309.jpg" },
+            { title: "One Piece: Elbaph", date: "2026-04-05T00:00:00", image: "https://cdn.myanimelist.net/images/anime/1322/135816.jpg" },
+            { title: "Witch Hat Atelier", date: "2026-04-06T00:00:00", image: "https://cdn.myanimelist.net/images/anime/1384/148347.jpg" },
+            { title: "Saga of Tanya the Evil S2", date: "2026-07-01T00:00:00", image: "https://cdn.myanimelist.net/images/anime/1436/146599.jpg" },
+        ];
+
+        function updateCountdown() {
+            const grid = document.getElementById('countdownGrid');
+            const now = new Date().getTime();
+
+            const html = countdownAnime.map(item => {
+                const targetDate = new Date(item.date).getTime();
+                const distance = targetDate - now;
+
+                let timeText;
+                if (distance < 0) {
+                    timeText = "Sedang Tayang!";
+                } else {
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                    timeText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+                }
+
+                return `
+                    <div class="countdown-item">
+                        <div class="countdown-item-title">${item.title}</div>
+                        <div class="countdown-timer">${timeText}</div>
+                        <div class="countdown-item-date">${formatDate(item.date)}</div>
+                    </div>
+                `;
+            }).join('');
+
+            grid.innerHTML = html;
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // =====================
+        // SEASON TABS
+        // =====================
+        let currentSeason = 'all';
+        let searchQuery = '';
+
+        document.querySelectorAll('.season-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.season-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentSeason = tab.dataset.season;
+                filterAndRender();
+            });
+        });
+
+        // =====================
+        // SEARCH
+        // =====================
+        const searchInput = document.getElementById('searchInput');
+        let searchTimeout;
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                searchQuery = e.target.value.toLowerCase().trim();
+                filterAndRender();
+            }, 300);
+        });
+
+        function filterAndRender() {
+            let filtered = animeData;
+
+            // Filter by season
+            if (currentSeason !== 'all') {
+                filtered = filtered.filter(a => a.season === currentSeason);
+            }
+
+            // Filter by search
+            if (searchQuery) {
+                filtered = filtered.filter(a =>
+                    a.title.toLowerCase().includes(searchQuery) ||
+                    (a.originalTitle && a.originalTitle.toLowerCase().includes(searchQuery)) ||
+                    a.studio.toLowerCase().includes(searchQuery) ||
+                    (a.synopsis && a.synopsis.toLowerCase().includes(searchQuery))
+                );
+            }
+
+            renderAnimeCards(filtered);
+        }
+
+        // =====================
+        // SCROLL REVEAL
+        // =====================
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.querySelectorAll('.anime-card, .featured-card').forEach((el, i) => {
+                        setTimeout(() => el.classList.add('visible'), i * 100);
+                    });
+                }
+            });
+        }, observerOptions);
+
+        // =====================
+        // INIT
+        // =====================
+        renderAnimeCards(animeData);
+        renderFeatured();
+        updateCountdown();
+
+        // Observe sections
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Animate featured cards
+        setTimeout(() => {
+            document.querySelectorAll('.featured-card').forEach((card, i) => {
+                setTimeout(() => card.classList.add('visible'), i * 150);
+            });
+        }, 2500);
+
+        // =====================
+        // SMOOTH SCROLL FOR NAV
+        // =====================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // =====================
+        // UPDATE STATS
+        // =====================
+        document.getElementById('totalAnime').textContent = animeData.length + '+';
+        const uniqueStudios = new Set(animeData.map(a => a.studio)).size;
+        document.getElementById('studioCount').textContent = uniqueStudios + '+';
+    </script>
+</body>
+</html>
